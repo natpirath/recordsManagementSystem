@@ -5,8 +5,8 @@ export interface Record {
   REF_DATE: number;
   GEO: string;
   DGUID: string;
-  Area: string;
-  UOM: string;
+  TYPE_OF_PRODUCT: string;
+  TYPE_OF_STORAGE: string;
   UOM_ID: number;
   SCALAR_FACTOR: string;
   SCALAR_ID: number;

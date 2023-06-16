@@ -4,11 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './controllers/record.controller';
 import { FormsModule } from '@angular/forms';
+import { RecordFilterComponent } from './controllers/record-filter.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RecordFilterComponent,
   ],
   imports: [
     BrowserModule,

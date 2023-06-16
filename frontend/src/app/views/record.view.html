@@ -1,13 +1,22 @@
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <div class="container">
   <h1 class="text-center">Hello, {{ fullName }}</h1>
+  <div class="button-container">
+    <!-- Reload Data Button -->
+    <button (click)="reloadData()">Reload Data</button>
+
+    <!-- Persist Data Button -->
+    <button (click)="persistData()">Persist Data</button>
+    <app-record-filter (filterApplied)="filterRecordsByTypeOfProduct($event)"></app-record-filter>
+  </div>
   <div class="table-container">
     <table>
       <tr>
         <th>REF_DATE</th>
         <th>GEO</th>
         <th>DGUID</th>
-        <th>Area</th>
-        <th>UOM</th>
+        <th>TYPE_OF_PRODUCT</th>
+        <th>TYPE_OF_STORAGE</th>
         <th>UOM_ID</th>
         <th>SCALAR_FACTOR</th>
         <th>SCALAR_ID</th>
@@ -19,12 +28,12 @@
         <th>TERMINATED</th>
         <th>DECIMALS</th>
       </tr>
-      <tr *ngFor="let record of records">
+      <tr *ngFor="let record of filteredRecords">
         <td>{{ record.REF_DATE }}</td>
         <td>{{ record.GEO }}</td>
         <td>{{ record.DGUID }}</td>
-        <td>{{ record.Area }}</td>
-        <td>{{ record.UOM }}</td>
+        <td>{{ record.TYPE_OF_PRODUCT }}</td>
+        <td>{{ record.TYPE_OF_STORAGE }}</td>
         <td>{{ record.UOM_ID }}</td>
         <td>{{ record.SCALAR_FACTOR }}</td>
         <td>{{ record.SCALAR_ID }}</td>
