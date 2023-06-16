@@ -2,7 +2,18 @@ const express = require('express');
 const router = express.Router();
 const recordsController = require('../controllers/recordsController');
 
-// Route for getting records
-router.get('/records', recordsController.getRecords);
+// Route for getting all records
+router.get('/records', recordsController.getAllRecords);
+
+// Route for reloading records
+router.get('/reloadRecords', recordsController.reloadRecords);
+
+// Route for getting records by area
+router.get('/records/filter', recordsController.filterRecordsByTypeOfProduct);
+
+// Route for persisting data
+router.post('/persistRecords', recordsController.persistData);
+
+
 
 module.exports = router;

@@ -24,21 +24,21 @@ class DataService {
           const recordData = lines[i].split(',');
 
           const record = {
-            REF_DATE: recordData[0],
-            GEO: recordData[1],
-            DGUID: recordData[2],
-            Area: recordData[3],
-            UOM: recordData[4],
-            UOM_ID: recordData[5],
-            SCALAR_FACTOR: recordData[6],
-            SCALAR_ID: recordData[7],
-            VECTOR: recordData[8],
-            COORDINATE: recordData[9],
-            VALUE: recordData[10],
-            STATUS: recordData[11],
-            SYMBOL: recordData[12],
-            TERMINATED: recordData[13],
-            DECIMALS: recordData[14],
+            REF_DATE: removeDoubleQuotes(recordData[0]),
+            GEO: removeDoubleQuotes(recordData[1]),
+            DGUID: removeDoubleQuotes(recordData[2]),
+            TYPE_OF_PRODUCT: removeDoubleQuotes(recordData[3]),
+            TYPE_OF_STORAGE: removeDoubleQuotes(recordData[4]),
+            UOM_ID: removeDoubleQuotes(recordData[5]),
+            SCALAR_FACTOR: removeDoubleQuotes(recordData[6]),
+            SCALAR_ID: removeDoubleQuotes(recordData[7]),
+            VECTOR: removeDoubleQuotes(recordData[8]),
+            COORDINATE: removeDoubleQuotes(recordData[9]),
+            VALUE: parseFloat(recordData[10]),
+            STATUS: removeDoubleQuotes(recordData[11]),
+            SYMBOL: removeDoubleQuotes(recordData[12]),
+            TERMINATED: removeDoubleQuotes(recordData[13]),
+            DECIMALS: parseFloat(recordData[14]),
           };
 
           records.push(record);
@@ -50,9 +50,21 @@ class DataService {
     });
   }
 
+  getRecordsByArea(typeOfProduct) {
+    // Filter the records based on the category
+    return this.records.filter(record => record.TYPE_OF_PRODUCT === typeOfProduct);
+  }
+
   getRecords() {
     return this.records;
   }
+}
+
+function removeDoubleQuotes(value) {
+  if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
+    return value.slice(1, -1);
+  }
+  return value;
 }
 
 module.exports = DataService;
