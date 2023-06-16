@@ -63,6 +63,15 @@ class DataService {
   createRecord(newRecord) {
     this.records.push(newRecord);
   }
+
+  updateRecord(recordId, updatedRecord) {
+    const index = this.records.findIndex(record => record.id === recordId);
+    if (index !== -1) {
+      this.records[index] = updatedRecord;
+      return true;
+    }
+    return false;
+  }
 }
 
 function removeDoubleQuotes(value) {

@@ -14,6 +14,53 @@
     <app-record-filter (filterApplied)="filterRecordsByTypeOfProduct($event)"></app-record-filter>
     
   </div>
+
+  <div class="table-container">
+    <table>
+      <tr>
+        <th>REF_DATE</th>
+        <th>GEO</th>
+        <th>DGUID</th>
+        <th>TYPE_OF_PRODUCT</th>
+        <th>TYPE_OF_STORAGE</th>
+        <th>UOM</th>
+        <th>UOM_ID</th>
+        <th>SCALAR_FACTOR</th>
+        <th>SCALAR_ID</th>
+        <th>VECTOR</th>
+        <th>COORDINATE</th>
+        <th>VALUE</th>
+        <th>STATUS</th>
+        <th>SYMBOL</th>
+        <th>TERMINATED</th>
+        <th>DECIMALS</th>
+      </tr>
+      <tr *ngFor="let record of records; let i = index;">
+        <td>{{ record.REF_DATE }}</td>
+        <td>{{ record.GEO }}</td>
+        <td>{{ record.DGUID }}</td>
+        <td>{{ record.TYPE_OF_PRODUCT }}</td>
+        <td>{{ record.TYPE_OF_STORAGE }}</td>
+        <td>{{ record.UOM }}</td>
+        <td>{{ record.UOM_ID }}</td>
+        <td>{{ record.SCALAR_FACTOR }}</td>
+        <td>{{ record.SCALAR_ID }}</td>
+        <td>{{ record.VECTOR }}</td>
+        <td>{{ record.COORDINATE }}</td>
+        <td>{{ record.VALUE }}</td>
+        <td>{{ record.STATUS }}</td>
+        <td>{{ record.SYMBOL }}</td>
+        <td>{{ record.TERMINATED }}</td>
+        <td>{{ record.DECIMALS }}</td>
+          <div class="buttons-table">
+            <button class="btn btn-outline-dark" (click)="editRecord(i)">Edit</button>
+            <button class="btn btn-outline-danger" (click)="deleteRecord(i)">Delete</button>  
+          </div>      
+      </tr>
+    </table>
+  </div>
+
+
 <!-- Modal -->
 <div class="modal" [ngClass]="{ 'open': isModalOpen }">
   <div class="modal-content">
@@ -88,44 +135,4 @@
     <button (click)="closeModal()">Close</button>
   </div>
   </div>
-  <div class="table-container">
-    <table>
-      <tr>
-        <th>REF_DATE</th>
-        <th>GEO</th>
-        <th>DGUID</th>
-        <th>TYPE_OF_PRODUCT</th>
-        <th>TYPE_OF_STORAGE</th>
-        <th>UOM</th>
-        <th>UOM_ID</th>
-        <th>SCALAR_FACTOR</th>
-        <th>SCALAR_ID</th>
-        <th>VECTOR</th>
-        <th>COORDINATE</th>
-        <th>VALUE</th>
-        <th>STATUS</th>
-        <th>SYMBOL</th>
-        <th>TERMINATED</th>
-        <th>DECIMALS</th>
-      </tr>
-      <tr *ngFor="let record of filteredRecords">
-        <td>{{ record.REF_DATE }}</td>
-        <td>{{ record.GEO }}</td>
-        <td>{{ record.DGUID }}</td>
-        <td>{{ record.TYPE_OF_PRODUCT }}</td>
-        <td>{{ record.TYPE_OF_STORAGE }}</td>
-        <td>{{ record.UOM }}</td>
-        <td>{{ record.UOM_ID }}</td>
-        <td>{{ record.SCALAR_FACTOR }}</td>
-        <td>{{ record.SCALAR_ID }}</td>
-        <td>{{ record.VECTOR }}</td>
-        <td>{{ record.COORDINATE }}</td>
-        <td>{{ record.VALUE }}</td>
-        <td>{{ record.STATUS }}</td>
-        <td>{{ record.SYMBOL }}</td>
-        <td>{{ record.TERMINATED }}</td>
-        <td>{{ record.DECIMALS }}</td>
-      </tr>
-    </table>
   </div>
-</div>

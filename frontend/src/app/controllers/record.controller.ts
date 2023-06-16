@@ -35,20 +35,10 @@ export class AppComponent implements OnInit, OnDestroy {
     TERMINATED: '',
     DECIMALS: 0,
   };
-    // Define the isModalOpen property
-    isModalOpen = false;
 
-    // Rest of the component code
-  
-    // Method to open the modal
-    openModal() {
-      this.isModalOpen = true;
-    }
-  
-    // Method to close the modal
-    closeModal() {
-      this.isModalOpen = false;
-    }
+  // Define the isModalOpen property
+  isModalOpen = false;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -81,7 +71,6 @@ export class AppComponent implements OnInit, OnDestroy {
       },
     });
   }
-  
 
   reloadData(): void {
     this.http.get<Record[]>('http://localhost:3000/api/reloadRecords').subscribe({
@@ -121,6 +110,16 @@ export class AppComponent implements OnInit, OnDestroy {
     };
   }
 
+  editRecord(index: number) {
+    const record = this.records[index];
+    this.newRecord = { ...record };
+    this.isModalOpen = true;
+  }
+
+  deleteRecord(index: number) {
+    this.records.splice(index, 1);
+  }
+
   persistData(): void {
     this.http.post('http://localhost:3000/api/persistRecords', this.records).subscribe({
       next: () => {
@@ -148,5 +147,15 @@ export class AppComponent implements OnInit, OnDestroy {
       // No typeOfProduct specified, display all records
       this.filteredRecords = this.records;
     }
+  }
+
+  // Method to open the modal
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  // Method to close the modal
+  closeModal() {
+    this.isModalOpen = false;
   }
 }

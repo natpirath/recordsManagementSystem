@@ -5,7 +5,7 @@
   justify-content: center;
   min-height: 100vh;
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 1000px;
   padding: 20px;
   text-align: center;
 }
@@ -16,8 +16,24 @@ h1 {
 
 .table-container {
   margin-top: 20px;
-
+  margin-left: 100px;
+  overflow-x: auto;
 }
+
+.buttons-table {
+  background-color: white;
+  display: flex;
+  flex-wrap:wrap;
+}
+
+
+
+.buttons-table button {
+  margin-right: 10px;
+  height: 100%;
+}
+
+
 
 button {
   align-items: start;
