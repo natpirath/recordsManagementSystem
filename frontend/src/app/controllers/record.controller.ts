@@ -17,7 +17,38 @@ export class AppComponent implements OnInit, OnDestroy {
   selectedRecordId: any;
   startId: any;
   endId: any;
+  newRecord: Record = {
+    REF_DATE: '',
+    GEO: '',
+    DGUID: '',
+    TYPE_OF_PRODUCT: '',
+    TYPE_OF_STORAGE: '',
+    UOM: '',
+    UOM_ID: 0,
+    SCALAR_FACTOR: '',
+    SCALAR_ID: 0,
+    VECTOR: '',
+    COORDINATE: '',
+    VALUE: 0,
+    STATUS: '',
+    SYMBOL: '',
+    TERMINATED: '',
+    DECIMALS: 0,
+  };
+    // Define the isModalOpen property
+    isModalOpen = false;
 
+    // Rest of the component code
+  
+    // Method to open the modal
+    openModal() {
+      this.isModalOpen = true;
+    }
+  
+    // Method to close the modal
+    closeModal() {
+      this.isModalOpen = false;
+    }
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -37,10 +68,20 @@ export class AppComponent implements OnInit, OnDestroy {
         this.filteredRecords = data; // Set filteredRecords initially to all records
       },
       error: (error: any) => {
-        console.error('Failed to load records:', error);
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error occurred
+          console.error('An error occurred:', error.error.message);
+        } else {
+          // Server-side error occurred
+          console.error(
+            `Backend returned code ${error.status}, ` +
+            `body was: ${error.error}`
+          );
+        }
       },
     });
   }
+  
 
   reloadData(): void {
     this.http.get<Record[]>('http://localhost:3000/api/reloadRecords').subscribe({
@@ -53,6 +94,31 @@ export class AppComponent implements OnInit, OnDestroy {
         console.error('Failed to reload records:', error);
       },
     });
+  }
+
+  createRecord(): void {
+    // Add the new record to the array of records
+    this.records.push(this.newRecord);
+
+    // Clear the form for the next input
+    this.newRecord = {
+      REF_DATE: '',
+      GEO: '',
+      DGUID: '',
+      TYPE_OF_PRODUCT: '',
+      TYPE_OF_STORAGE: '',
+      UOM: '',
+      UOM_ID: 0,
+      SCALAR_FACTOR: '',
+      SCALAR_ID: 0,
+      VECTOR: '',
+      COORDINATE: '',
+      VALUE: 0,
+      STATUS: '',
+      SYMBOL: '',
+      TERMINATED: '',
+      DECIMALS: 0,
+    };
   }
 
   persistData(): void {

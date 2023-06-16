@@ -19,11 +19,20 @@ h1 {
 
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
+button {
+  align-items: start;
+  flex-wrap: wrap; /* Wrap the buttons to the next line if necessary */
+  height: 40px;
+
 }
+
+
+.button-container button {
+  flex: 0 0 auto; /* Allow the buttons to grow or shrink as needed */
+  white-space: nowrap; /* Prevent button text from wrapping to multiple lines */
+}
+
+
 
 th {
   background-color: #7F8487;
@@ -44,3 +53,37 @@ tr:hover {
   cursor: pointer;
 }
 
+/* CSS styles for the modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal.open {
+  display: block;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 20% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.modal-content h3 {
+  margin-bottom: 10px;
+}
+
+.modal-content button {
+  margin-top: 10px;
+}
+
+/* Additional CSS styles */

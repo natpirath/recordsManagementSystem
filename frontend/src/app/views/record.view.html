@@ -1,13 +1,92 @@
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <div class="container">
-  <h1 class="text-center">Hello, {{ fullName }}</h1>
-  <div class="button-container">
+  <h1 class="text-center">Program by {{ fullName }}</h1>
+  <div class="button-container d-flex justify-content-start">
     <!-- Reload Data Button -->
-    <button (click)="reloadData()">Reload Data</button>
+    <button class="btn btn-outline-dark" (click)="reloadData()">Reload Data</button>
 
     <!-- Persist Data Button -->
-    <button (click)="persistData()">Persist Data</button>
+    <button class="btn btn-outline-dark" (click)="persistData()">Persist Data</button>
+
+    <!-- Button to open the modal -->
+    <button class="btn btn-outline-dark" (click)="openModal()">Create New Record</button>
+    <!-- Filter Records -->
     <app-record-filter (filterApplied)="filterRecordsByTypeOfProduct($event)"></app-record-filter>
+    
+  </div>
+<!-- Modal -->
+<div class="modal" [ngClass]="{ 'open': isModalOpen }">
+  <div class="modal-content">
+    <h3>Create New Record</h3>
+    <form (ngSubmit)="createRecord()" #recordForm="ngForm">
+      <div>
+        <label for="refDate">REF_DATE:</label>
+        <input type="text" id="refDate" name="refDate" [(ngModel)]="newRecord.REF_DATE" required>
+      </div>
+      <div>
+        <label for="geo">GEO:</label>
+        <input type="text" id="geo" name="geo" [(ngModel)]="newRecord.GEO" required>
+      </div>
+      <div>
+        <label for="dguid">DGUID:</label>
+        <input type="text" id="dguid" name="dguid" [(ngModel)]="newRecord.DGUID" required>
+      </div>
+      <div>
+        <label for="typeOfProduct">TYPE_OF_PRODUCT:</label>
+        <input type="text" id="typeOfProduct" name="typeOfProduct" [(ngModel)]="newRecord.TYPE_OF_PRODUCT" required>
+      </div>
+      <div>
+        <label for="typeOfStorage">TYPE_OF_STORAGE:</label>
+        <input type="text" id="typeOfStorage" name="typeOfStorage" [(ngModel)]="newRecord.TYPE_OF_STORAGE" required>
+      </div>
+      <div>
+        <label for="uom">UOM:</label>
+        <input type="string" id="uom" name="uom" [(ngModel)]="newRecord.UOM" required>
+      </div>
+      <div>
+        <label for="uomId">UOM_ID:</label>
+        <input type="number" id="uomId" name="uomId" [(ngModel)]="newRecord.UOM_ID" required>
+      </div>
+      <div>
+        <label for="scalarFactor">SCALAR_FACTOR:</label>
+        <input type="text" id="scalarFactor" name="scalarFactor" [(ngModel)]="newRecord.SCALAR_FACTOR" required>
+      </div>
+      <div>
+        <label for="scalarId">SCALAR_ID:</label>
+        <input type="number" id="scalarId" name="scalarId" [(ngModel)]="newRecord.SCALAR_ID" required>
+      </div>
+      <div>
+        <label for="vector">VECTOR:</label>
+        <input type="text" id="vector" name="vector" [(ngModel)]="newRecord.VECTOR" required>
+      </div>
+      <div>
+        <label for="coordinate">COORDINATE:</label>
+        <input type="text" id="coordinate" name="coordinate" [(ngModel)]="newRecord.COORDINATE" required>
+      </div>
+      <div>
+        <label for="value">VALUE:</label>
+        <input type="number" id="value" name="value" [(ngModel)]="newRecord.VALUE" required>
+      </div>
+      <div>
+        <label for="status">STATUS:</label>
+        <input type="text" id="status" name="status" [(ngModel)]="newRecord.STATUS" required>
+      </div>
+      <div>
+        <label for="symbol">SYMBOL:</label>
+        <input type="text" id="symbol" name="symbol" [(ngModel)]="newRecord.SYMBOL" required>
+      </div>
+      <div>
+        <label for="terminated">TERMINATED:</label>
+        <input type="text" id="terminated" name="terminated" [(ngModel)]="newRecord.TERMINATED" required>
+      </div>
+      <div>
+        <label for="decimals">DECIMALS:</label>
+        <input type="number" id="decimals" name="decimals" [(ngModel)]="newRecord.DECIMALS" required>
+      </div>
+      <button type="submit" [disabled]="!recordForm.valid">Submit</button>
+    </form>
+    <button (click)="closeModal()">Close</button>
+  </div>
   </div>
   <div class="table-container">
     <table>
@@ -17,6 +96,7 @@
         <th>DGUID</th>
         <th>TYPE_OF_PRODUCT</th>
         <th>TYPE_OF_STORAGE</th>
+        <th>UOM</th>
         <th>UOM_ID</th>
         <th>SCALAR_FACTOR</th>
         <th>SCALAR_ID</th>
@@ -34,6 +114,7 @@
         <td>{{ record.DGUID }}</td>
         <td>{{ record.TYPE_OF_PRODUCT }}</td>
         <td>{{ record.TYPE_OF_STORAGE }}</td>
+        <td>{{ record.UOM }}</td>
         <td>{{ record.UOM_ID }}</td>
         <td>{{ record.SCALAR_FACTOR }}</td>
         <td>{{ record.SCALAR_ID }}</td>
