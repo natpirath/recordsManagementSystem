@@ -1,38 +1,57 @@
+// Import required modules and services
 const DataService = require('../services/dataService');
 const dataService = new DataService();
 const path = require('path');
 const fs = require('fs');
 
-
+/**
+ * Controller methods for handling records.
+ */
 module.exports = {
-    getAllRecords: (req, res) => {
-      const records = dataService.getRecords();
-    
-      if (records.length === 0) {
-        dataService.loadRecords()
-          .then((loadedRecords) => {
-            res.json(loadedRecords);
-          })
-          .catch((error) => {
-            res.status(500).send(error);
-          });
-      } else {
-        res.json(records);
-      }
-    },
-    
-    filterRecordsByTypeOfProduct: (req, res) => {
-      const { typeOfProduct } = req.query;
-    
-      if (!typeOfProduct) {
-        return res.status(400).json({ message: 'TypeOfProduct parameter is required' });
-      }
-    
-      const filteredRecords = dataService.getRecordsByArea(typeOfProduct);
-      res.json(filteredRecords);
-    },
-    
-  
+  /**
+   * Get all records.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   */
+  getAllRecords: (req, res) => {
+    const records = dataService.getRecords();
+
+    if (records.length === 0) {
+      // Load records if empty
+      dataService.loadRecords()
+        .then((loadedRecords) => {
+          res.json(loadedRecords);
+        })
+        .catch((error) => {
+          res.status(500).send(error);
+        });
+    } else {
+      // Return existing records
+      res.json(records);
+    }
+  },
+
+  /**
+   * Filter records by type of product.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   */
+  filterRecordsByTypeOfProduct: (req, res) => {
+    const { typeOfProduct } = req.query;
+
+    if (!typeOfProduct) {
+      return res.status(400).json({ message: 'TypeOfProduct parameter is required' });
+    }
+
+    const filteredRecords = dataService.getRecordsByArea(typeOfProduct);
+    res.json(filteredRecords);
+  },
+
+  /**
+   * Reload records.
+   * @param {Object} _req - The request object.
+   * @param {Object} res - The response object.
+   */
   reloadRecords: async (_req, res) => {
     try {
       const loadedRecords = await dataService.loadRecords();
@@ -44,7 +63,12 @@ module.exports = {
     }
   },
 
-  persistData: () => {
+  /**
+   * Persist data.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   */
+  persistData: (req, res) => {
     const records = dataService.getRecords();
     console.log('Records:', records);
     const filePath = path.join(__dirname, '..', 'assets', 'newFile.csv');
@@ -60,9 +84,14 @@ module.exports = {
         // Send a success response or perform any additional tasks
       }
     });
-  }
+  },
 };
 
+/**
+ * Convert records to CSV format.
+ * @param {Object[]} records - The records array.
+ * @returns {string} The CSV data.
+ */
 function convertToCSV(records) {
   const headers = Object.keys(records[0]).join(',');
   const rows = records.map((record) => Object.values(record).join(','));

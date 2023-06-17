@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const recordsController = require('../controllers/recordsController');
 
+/**
+ * Routes for handling records.
+ */
+
 // Route for getting all records
 router.get('/records', recordsController.getAllRecords);
 

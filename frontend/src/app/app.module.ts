@@ -6,7 +6,9 @@ import { AppComponent } from './controllers/record.controller';
 import { FormsModule } from '@angular/forms';
 import { RecordFilterComponent } from './controllers/record-filter.component';
 
-
+/**
+ * AppModule is the root module of the application that orchestrates the different components, modules, and services.
+ */
 @NgModule({
   declarations: [
     AppComponent,
