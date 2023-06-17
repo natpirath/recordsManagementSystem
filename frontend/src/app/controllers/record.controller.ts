@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { Record } from '../models/record.model';
 import { Subscription } from 'rxjs';
 
+/**
+ * Root component for the application
+ */
 @Component({
   selector: 'app-root',
   templateUrl: '../views/record.view.html',
@@ -51,6 +54,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Load data from the server
+   */
   loadData(): void {
     this.subscription = this.http.get<Record[]>('http://localhost:3000/api/records').subscribe({
       next: (data: Record[]) => {
@@ -72,6 +78,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Reload data from the server
+   */
   reloadData(): void {
     this.http.get<Record[]>('http://localhost:3000/api/reloadRecords').subscribe({
       next: (data: Record[]) => {
@@ -85,6 +94,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Create a new record
+   */
   createRecord(): void {
     // Add the new record to the array of records
     this.records.push(this.newRecord);
@@ -110,16 +122,27 @@ export class AppComponent implements OnInit, OnDestroy {
     };
   }
 
+  /**
+   * Edit a record
+   * @param index The index of the record to edit
+   */
   editRecord(index: number) {
     const record = this.records[index];
     this.newRecord = { ...record };
     this.isModalOpen = true;
   }
 
+  /**
+   * Delete a record
+   * @param index The index of the record to delete
+   */
   deleteRecord(index: number) {
     this.records.splice(index, 1);
   }
 
+  /**
+   * Persist the data to the server
+   */
   persistData(): void {
     this.http.post('http://localhost:3000/api/persistRecords', this.records).subscribe({
       next: () => {
@@ -131,6 +154,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Filter records by typeOfProduct
+   * @param typeOfProduct The typeOfProduct to filter by
+   */
   filterRecordsByTypeOfProduct(typeOfProduct: string): void {
     if (typeOfProduct) {
       const url = `http://localhost:3000/api/records/filter?typeOfProduct=${encodeURIComponent(typeOfProduct)}`;
@@ -149,12 +176,16 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Method to open the modal
+  /**
+   * Open the modal
+   */
   openModal() {
     this.isModalOpen = true;
   }
 
-  // Method to close the modal
+  /**
+   * Close the modal
+   */
   closeModal() {
     this.isModalOpen = false;
   }
