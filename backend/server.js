@@ -5,35 +5,19 @@ const apiRoutes = require('./routes/apiRoutes');
 const app = express();
 const port = 3000;
 
-/**
- * Enable CORS middleware
- */
 app.use(cors());
-
-/**
- * Mount the API routes
- */
 app.use('/api', apiRoutes);
 
-/**
- * Configure CORS options
- * @type {cors.CorsOptions}
- */
+// Configure CORS options
 const corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'http://localhost:4200', // Replace with the actual origin of your frontend application
 };
 
-/**
- * Enable CORS with specific options
- */
 app.use(cors(corsOptions));
+app.use('/api', apiRoutes);
 
-/**
- * Middleware to set Content-Security-Policy (CSP) header
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- */
+
+// Add the CSP modification code here
 app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
@@ -42,9 +26,8 @@ app.use((req, res, next) => {
   next();
 });
 
-/**
- * Start the server
- */
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+
