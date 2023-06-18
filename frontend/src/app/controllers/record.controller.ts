@@ -138,6 +138,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.http.get<Record[]>(url).subscribe({
         next: (data: Record[]) => {
           this.filteredRecords = data; // Update filteredRecords with filtered data
+          this.records = data;
         },
         error: (error: any) => {
           console.error('Failed to filter records by type of product:', error);
