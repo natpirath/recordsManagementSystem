@@ -14,6 +14,9 @@ export class RecordFilterComponent {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * This searches the records based on the specified typeOfProduct.
+   */
   searchRecords() {
     if (this.typeOfProduct) {
       // Make a GET request to filter records by typeOfProduct

@@ -1,11 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 
+/**
+ * This class is a service
+ */
 class DataService {
   constructor() {
     this.records = [];
   }
 
+  /**
+   * Loads records from a CSV file.
+   * @returns {Promise<Array>} A promise that resolves with the loaded records.
+   * @throws {string} If failed to read the CSV file.
+   */
   loadRecords() {
     return new Promise((resolve, reject) => {
       const csvFilePath = path.join(__dirname, '..', 'assets', '32100260.csv');
@@ -51,29 +59,53 @@ class DataService {
     });
   }
 
+  /**
+   * This retrieves records filtered by the type of product.
+   * @param {string} typeOfProduct - The type of product to filter by.
+   * @returns {Array} The filtered records.
+   */
   getRecordsByArea(typeOfProduct) {
-    // Filter the records based on the category
     return this.records.filter(record => record.TYPE_OF_PRODUCT === typeOfProduct);
   }
 
+  /**
+   * This retrieves all records.
+   * @returns {Array} All records.
+   */
   getRecords() {
     return this.records;
   }
 
+  /**
+   * This creates a new record.
+   * @param {object} newRecord - The new record to create.
+   */
   createRecord(newRecord) {
     this.records.push(newRecord);
   }
 
+  /**
+   * This updates a record by index ID.
+   * @param {string} recordId - The ID of the record to update.
+   * @param {object} updatedRecord - The updated record data.
+   * @returns {boolean} True if the record was updated successfully, false otherwise.
+   */
   updateRecord(recordId, updatedRecord) {
     const index = this.records.findIndex(record => record.id === recordId);
     if (index !== -1) {
-      this.records[index] = updatedRecord;
+      this.records[index] = { ...this.records[index], ...updatedRecord };
       return true;
     }
     return false;
   }
+  
 }
 
+/**
+ * This removes double quotes from a value if present.
+ * @param {string} value - The value to remove double quotes from.
+ * @returns {string} The value without double quotes.
+ */
 function removeDoubleQuotes(value) {
   if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
     return value.slice(1, -1);

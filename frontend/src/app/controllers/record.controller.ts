@@ -51,6 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * This loads the data from the server.
+   */
   loadData(): void {
     this.subscription = this.http.get<Record[]>('http://localhost:3000/api/records').subscribe({
       next: (data: Record[]) => {
@@ -72,6 +75,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * This reloads the data from the server.
+   */
   reloadData(): void {
     this.http.get<Record[]>('http://localhost:3000/api/reloadRecords').subscribe({
       next: (data: Record[]) => {
@@ -85,6 +91,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * This creates a new record.
+   */
   createRecord(): void {
     // Add the new record to the array of records
     this.records.push(this.newRecord);
@@ -110,16 +119,27 @@ export class AppComponent implements OnInit, OnDestroy {
     };
   }
 
+  /**
+   * This edit a record.
+   * @param index The index of the record to edit.
+   */
   editRecord(index: number) {
-    const record = this.records[index];
-    this.newRecord = { ...record };
+    this.newRecord = this.records[index];
+    this.records.splice(index, 1);
     this.isModalOpen = true;
   }
 
+  /**
+   * This delete a record.
+   * @param index The index of the record to delete.
+   */
   deleteRecord(index: number) {
     this.records.splice(index, 1);
   }
 
+  /**
+   * This persists data to the server.
+   */
   persistData(): void {
     this.http.post('http://localhost:3000/api/persistRecords', this.records).subscribe({
       next: () => {
@@ -131,6 +151,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * This filters the records by typeOfProduct.
+   * @param typeOfProduct The typeOfProduct to filter by.
+   */
   filterRecordsByTypeOfProduct(typeOfProduct: string): void {
     if (typeOfProduct) {
       const url = `http://localhost:3000/api/records/filter?typeOfProduct=${encodeURIComponent(typeOfProduct)}`;
@@ -138,7 +162,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.http.get<Record[]>(url).subscribe({
         next: (data: Record[]) => {
           this.filteredRecords = data; // Update filteredRecords with filtered data
-          this.records = data;
+          this.records
         },
         error: (error: any) => {
           console.error('Failed to filter records by type of product:', error);
