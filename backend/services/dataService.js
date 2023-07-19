@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const BinarySearchTree = require('./binarySearchTree.js'); // Import the BinarySearchTree class
 
 /**
  * This class is a service
@@ -102,22 +103,22 @@ class DataService {
   /**
  * This sorts records by a specified field.
  * @param {string} field - The field to sort by.
- * @returns {Array} The sorted records.
+ * @returns {Map} The sorted records.
  */
-sortRecordsByField(field) {
-  return this.records.sort((a, b) => {
-    const aValue = a[field].toUpperCase(); // Assuming field values are strings, and ignoring case
-    const bValue = b[field].toUpperCase();
+  sortRecordsByField(field) {
+    const bst = new BinarySearchTree();
+
+    for (let record of this.records) {
+      const value = record[field].toUpperCase();
+      bst.insert(value, record);
+    }
     
-    if (aValue < bValue) {
-      return -1;
-    }
-    if (aValue > bValue) {
-      return 1;
-    }
-    return 0; // Equal values, leave them unchanged
-  });
-}
+    const sortedRecords = [];
+    bst.inOrder(bst.root, record => sortedRecords.push(record));
+
+    return sortedRecords;
+  }
+  
 
 }
 

@@ -67,12 +67,13 @@ module.exports = {
      */
     sortRecordsByField: (req, res) => {
       const { field } = req.query;
-
+    
       if (!field) {
         return res.status(400).json({ message: 'Field parameter is required' });
       }
-
+    
       const sortedRecords = dataService.sortRecordsByField(field);
+      
       res.json(sortedRecords);
     },
 

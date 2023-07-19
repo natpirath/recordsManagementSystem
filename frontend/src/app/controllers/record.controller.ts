@@ -175,7 +175,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-    // Add this function to your class
   /**
    * This sorts the records by a field.
    * @param field The field to sort by.
@@ -196,7 +195,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ...
 
 /**
  * This sorts the records by a specified field.
