@@ -12,9 +12,30 @@
     <button class="btn btn-outline-dark" (click)="openModal()">Create New Record</button>
     <!-- Filter Records -->
     <app-record-filter (filterApplied)="filterRecordsByTypeOfProduct($event)"></app-record-filter>
-    
-  </div>
 
+    <div class="dropdown">
+      <select (change)="sortRecordsByField($event.target)">
+        <option value="">Sort by...</option>
+        <option value="REF_DATE">Ref Date</option>
+        <option value="GEO">Geography</option>
+        <option value="TYPE_OF_PRODUCT">Type of Product</option>
+        <option value="TYPE_OF_STORAGE">Type of Storage</option>
+        <option value="UOM">UOM</option>
+        <option value="UOM_ID">UOM_ID</option>
+        <option value="SCALAR_FACTOR">Scalar Factor</option>
+        <option value="SCALAR_ID">Scalar ID</option>
+        <option value="VECTOR">Vector</option>
+        <option value="COORDINATE">Coordinate</option>
+        <option value="VALUE">Value</option>
+        <option value="STATUS">Status</option>
+        <option value="SYMBOL">Symbol</option>
+        <option value="TERMINATED">Terminated</option>
+        <option value="DECIMALS">Decimals</option>
+
+        <!-- Add more options as necessary -->
+      </select>
+    </div>
+  </div>
   <div class="table-container">
     <table>
       <tr>
