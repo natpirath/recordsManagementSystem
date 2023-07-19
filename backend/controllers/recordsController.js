@@ -61,6 +61,23 @@ module.exports = {
     },
 
     /**
+     * Sorts records by a specified field.
+     * @param {Object} req - The HTTP request object.
+     * @param {Object} res - The HTTP response object.
+     */
+    sortRecordsByField: (req, res) => {
+      const { field } = req.query;
+
+      if (!field) {
+        return res.status(400).json({ message: 'Field parameter is required' });
+      }
+
+      const sortedRecords = dataService.sortRecordsByField(field);
+      res.json(sortedRecords);
+    },
+
+
+    /**
      * Persists records to a file called newFile.
      */
     persistData: () => {

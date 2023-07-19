@@ -18,6 +18,10 @@ router.get('/records/filter', recordsController.filterRecordsByTypeOfProduct);
 // Route for persisting data
 router.post('/persistRecords', recordsController.persistData);
 
+// Route for sorting records by a specified field
+router.get('/records/sort', recordsController.sortRecordsByField);
+
+
 // // Route for updating a record
 // router.put('/records/:id', recordsController.updateRecord);
 

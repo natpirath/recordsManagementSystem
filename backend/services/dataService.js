@@ -98,8 +98,30 @@ class DataService {
     }
     return false;
   }
-  
+
+  /**
+ * This sorts records by a specified field.
+ * @param {string} field - The field to sort by.
+ * @returns {Array} The sorted records.
+ */
+sortRecordsByField(field) {
+  return this.records.sort((a, b) => {
+    const aValue = a[field].toUpperCase(); // Assuming field values are strings, and ignoring case
+    const bValue = b[field].toUpperCase();
+    
+    if (aValue < bValue) {
+      return -1;
+    }
+    if (aValue > bValue) {
+      return 1;
+    }
+    return 0; // Equal values, leave them unchanged
+  });
 }
+
+}
+
+
 
 /**
  * This removes double quotes from a value if present.
@@ -112,5 +134,6 @@ function removeDoubleQuotes(value) {
   }
   return value;
 }
+
 
 module.exports = DataService;

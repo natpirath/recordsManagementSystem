@@ -35,6 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
     TERMINATED: '',
     DECIMALS: 0,
   };
+  sortField = '';
 
   // Define the isModalOpen property
   isModalOpen = false;
@@ -162,7 +163,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.http.get<Record[]>(url).subscribe({
         next: (data: Record[]) => {
           this.filteredRecords = data; // Update filteredRecords with filtered data
-          this.records
+          this.records = data;
         },
         error: (error: any) => {
           console.error('Failed to filter records by type of product:', error);
@@ -173,6 +174,44 @@ export class AppComponent implements OnInit, OnDestroy {
       this.filteredRecords = this.records;
     }
   }
+
+    // Add this function to your class
+  /**
+   * This sorts the records by a field.
+   * @param field The field to sort by.
+   */
+  sortRecords(field: string): void {
+    if (field) {
+      const url = `http://localhost:3000/api/records/sort?field=${encodeURIComponent(field)}`;
+
+      this.http.get<Record[]>(url).subscribe({
+        next: (data: Record[]) => {
+          this.filteredRecords = data; // Update filteredRecords with sorted data
+          this.records = data;
+        },
+        error: (error: any) => {
+          console.error('Failed to sort records by field:', error);
+        },
+      });
+    }
+  }
+
+  // ...
+
+/**
+ * This sorts the records by a specified field.
+ * @param field The field to sort by.
+ */
+sortRecordsByField(target: EventTarget | null) {
+  const element = target as HTMLSelectElement;
+  const value = element.value;
+  this.sortRecords(value);
+}
+
+
+
+// ...
+
 
   // Method to open the modal
   openModal() {
