@@ -31,7 +31,7 @@ class DataService {
         const records = [];
         const limit = maxRecords || lines.length;
 
-        for (let i = 0; i < limit && i < lines.length; i++) {
+        for (let i = 1; i < limit && i < lines.length; i++) {
           const recordData = lines[i].split(',');
 
           const record = {
