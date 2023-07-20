@@ -36,6 +36,8 @@ export class AppComponent implements OnInit, OnDestroy {
     DECIMALS: 0,
   };
   sortField = '';
+  numRecords: number = 10;  // Default value
+
 
   // Define the isModalOpen property
   isModalOpen = false;
@@ -195,6 +197,21 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  getRecordsPage(start: number, limit: number): void {
+    const url = `http://localhost:3000/api/records/page?start=${start}&limit=${limit}`;
+  
+    this.http.get<Record[]>(url).subscribe({
+      next: (data: Record[]) => {
+        this.records = data;
+        this.filteredRecords = data; // Update filteredRecords with paginated data
+      },
+      error: (error: any) => {
+        console.error('Failed to get page of records:', error);
+      },
+    });
+  }
+  
+
 
 /**
  * This sorts the records by a specified field.
@@ -206,6 +223,22 @@ sortRecordsByField(target: EventTarget | null) {
   this.sortRecords(value);
 }
 
+/**
+ * This loads a specific number of records from the server.
+ */
+loadSpecificRecords(): void {
+  const url = `http://localhost:3000/api/loadSpecificRecords?numRecords=${this.numRecords}`;
+
+  this.http.get<Record[]>(url).subscribe({
+    next: (data: Record[]) => {
+      this.records = data;
+      this.filteredRecords = data; // Update filteredRecords with loaded data
+    },
+    error: (error: any) => {
+      console.error('Failed to load specific records:', error);
+    },
+  });
+}
 
 
 // ...

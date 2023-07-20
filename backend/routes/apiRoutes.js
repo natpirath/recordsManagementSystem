@@ -21,6 +21,10 @@ router.post('/persistRecords', recordsController.persistData);
 // Route for sorting records by a specified field
 router.get('/records/sort', recordsController.sortRecordsByField);
 
+// Route for loading a specific number of records
+router.get('/loadSpecificRecords', recordsController.loadSpecificRecords);
+
+
 
 // // Route for updating a record
 // router.put('/records/:id', recordsController.updateRecord);

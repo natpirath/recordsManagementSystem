@@ -13,6 +13,14 @@
     <!-- Filter Records -->
     <app-record-filter (filterApplied)="filterRecordsByTypeOfProduct($event)"></app-record-filter>
 
+    <div>
+      <label for="numRecords">Number of Records:</label>
+      <input [(ngModel)]="numRecords" id="numRecords" type="number">
+      <button (click)="loadSpecificRecords()">Load Records</button>
+    </div>
+    
+    
+
     <div class="dropdown">
       <select (change)="sortRecordsByField($event.target)">
         <option value="">Sort by...</option>
@@ -85,7 +93,7 @@
 <!-- Modal -->
 <div class="modal" [ngClass]="{ 'open': isModalOpen }">
   <div class="modal-content">
-    <h3>Create New Record</h3>
+    <h3>Update Record</h3>
     <form (ngSubmit)="createRecord()" #recordForm="ngForm">
       <div>
         <label for="refDate">REF_DATE:</label>

@@ -16,7 +16,7 @@ module.exports = {
       const records = dataService.getRecords();
     
       if (records.length === 0) {
-        dataService.loadRecords()
+        dataService.loadRecords(50)
           .then((loadedRecords) => {
             res.json(loadedRecords);
           })
@@ -97,7 +97,29 @@ module.exports = {
           // Send a success response or perform any additional tasks
         }
       });
-    }
+    },
+
+    /**
+ * Loads a specific number of records.
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
+loadSpecificRecords: (req, res) => {
+  const { numRecords } = req.query;
+
+  if (!numRecords) {
+    return res.status(400).json({ message: 'numRecords parameter is required' });
+  }
+
+  dataService.loadRecords(parseInt(numRecords))
+    .then((loadedRecords) => {
+      res.json(loadedRecords);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+}
+
   };
 
 /**

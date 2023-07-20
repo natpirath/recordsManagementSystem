@@ -12,10 +12,11 @@ class DataService {
 
   /**
    * Loads records from a CSV file.
+   * @param {number} [maxRecords] - Maximum number of records to load. If not specified, all records are loaded.
    * @returns {Promise<Array>} A promise that resolves with the loaded records.
    * @throws {string} If failed to read the CSV file.
    */
-  loadRecords() {
+  loadRecords(maxRecords) {
     return new Promise((resolve, reject) => {
       const csvFilePath = path.join(__dirname, '..', 'assets', '32100260.csv');
 
@@ -28,8 +29,9 @@ class DataService {
 
         const lines = csvData.split('\n');
         const records = [];
+        const limit = maxRecords || lines.length;
 
-        for (let i = 1; i < 100 && i < lines.length; i++) {
+        for (let i = 0; i < limit && i < lines.length; i++) {
           const recordData = lines[i].split(',');
 
           const record = {
@@ -100,10 +102,10 @@ class DataService {
     return false;
   }
 
-  /**
+/**
  * This sorts records by a specified field.
  * @param {string} field - The field to sort by.
- * @returns {Map} The sorted records.
+ * @returns {BinarySearchTree} The sorted records.
  */
   sortRecordsByField(field) {
     const bst = new BinarySearchTree();
@@ -118,11 +120,9 @@ class DataService {
 
     return sortedRecords;
   }
+
   
-
 }
-
-
 
 /**
  * This removes double quotes from a value if present.
@@ -135,6 +135,5 @@ function removeDoubleQuotes(value) {
   }
   return value;
 }
-
 
 module.exports = DataService;
