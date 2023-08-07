@@ -13,7 +13,7 @@ router.get('/records', recordsController.getAllRecords);
 router.get('/reloadRecords', recordsController.reloadRecords);
 
 // Route for getting records by area
-router.get('/records/filter', recordsController.filterRecordsByTypeOfProduct);
+router.get('/records/filterByProductAndGeo', recordsController.filterRecordsByProductAndGeo);
 
 // Route for persisting data
 router.post('/persistRecords', recordsController.persistData);

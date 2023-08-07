@@ -155,26 +155,34 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * This filters the records by typeOfProduct.
-   * @param typeOfProduct The typeOfProduct to filter by.
-   */
-  filterRecordsByTypeOfProduct(typeOfProduct: string): void {
-    if (typeOfProduct) {
-      const url = `http://localhost:3000/api/records/filter?typeOfProduct=${encodeURIComponent(typeOfProduct)}`;
+     * This filters the records by typeOfProduct and optionally by GEO.
+     * @param typeOfProduct The typeOfProduct to filter by.
+     * @param geo (Optional) The geographical area to filter by.
+     */
+  filterRecordsByTypeOfProductAndGeo(typeOfProduct?: string, geo?: string): void {
+    let url = 'http://localhost:3000/api/records/filterByProductAndGeo';
 
-      this.http.get<Record[]>(url).subscribe({
-        next: (data: Record[]) => {
-          this.filteredRecords = data; // Update filteredRecords with filtered data
-          this.records = data;
-        },
-        error: (error: any) => {
-          console.error('Failed to filter records by type of product:', error);
-        },
-      });
-    } else {
-      // No typeOfProduct specified, display all records
-      this.filteredRecords = this.records;
+    if (typeOfProduct || geo) {
+      url += '?';
+      if (typeOfProduct) {
+        url += `typeOfProduct=${encodeURIComponent(typeOfProduct)}`;
+      }
+      if (geo) {
+        url += (typeOfProduct ? '&' : '') + `geo=${encodeURIComponent(geo)}`;
+      }
     }
+
+    console.log('URL:', url); // Log the URL to check if it's constructed correctly
+
+    this.http.get<Record[]>(url).subscribe({
+      next: (data: Record[]) => {
+        this.filteredRecords = data; // Update filteredRecords with filtered data
+        this.records = data;
+      },
+      error: (error: any) => {
+        console.error('Failed to filter records by type of product and GEO:', error);
+      },
+    });
   }
 
   /**

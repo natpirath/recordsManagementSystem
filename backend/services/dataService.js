@@ -67,9 +67,29 @@ class DataService {
    * @param {string} typeOfProduct - The type of product to filter by.
    * @returns {Array} The filtered records.
    */
-  getRecordsByArea(typeOfProduct) {
+  getRecordsByProduct(typeOfProduct) {
     return this.records.filter(record => record.TYPE_OF_PRODUCT === typeOfProduct);
   }
+
+  /**
+   * This retrieves records filtered by the type of product.
+   * @param {string} typeOfProduct - The type of product to filter by.
+   * @returns {Array} The filtered records.
+   */
+    getRecordsByGeo(geo) {
+      return this.records.filter(record => record.GEO === geo);
+    }
+
+  /**
+   * This retrieves records filtered by the type of product and GEO.
+   * @param {string} typeOfProduct - The type of product to filter by.
+   * @param {string} geo - The geographical area to filter by.
+   * @returns {Array} The filtered records.
+   */
+    getRecordsByProductAndGeo(typeOfProduct, geo) {
+      return this.records.filter(record => 
+        record.TYPE_OF_PRODUCT === typeOfProduct && record.GEO === geo);
+    }  
 
   /**
    * This retrieves all records.
@@ -117,11 +137,8 @@ class DataService {
     
     const sortedRecords = [];
     bst.inOrder(bst.root, record => sortedRecords.push(record));
-
     return sortedRecords;
   }
-
-  
 }
 
 /**

@@ -33,16 +33,65 @@ module.exports = {
      * @param {Object} req - The HTTP request object.
      * @param {Object} res - The HTTP response object.
      */
-    filterRecordsByTypeOfProduct: (req, res) => {
-      const { typeOfProduct } = req.query;
+    // filterRecordsByTypeOfProduct: (req, res) => {
+    //   const { typeOfProduct } = req.query;
     
-      if (!typeOfProduct) {
-        return res.status(400).json({ message: 'TypeOfProduct parameter is required' });
-      }
+    //   if (!typeOfProduct) {
+    //     return res.status(400).json({ message: 'TypeOfProduct parameter is required' });
+    //   }
     
-      const filteredRecords = dataService.getRecordsByArea(typeOfProduct);
-      res.json(filteredRecords);
-    },
+    //   const filteredRecords = dataService.getRecordsByArea(typeOfProduct);
+    //   res.json(filteredRecords);
+    // },
+
+    //     /**
+    //  * Filters records by type of product.
+    //  * @param {Object} req - The HTTP request object.
+    //  * @param {Object} res - The HTTP response object.
+    //  */
+    //     filterRecordsByGeo: (req, res) => {
+    //       const { geo } = req.query;
+          
+    //       if (!geo) {
+    //         return res.status(400).json({ message: 'Geo parameter is required' });
+    //       }
+          
+    //       const filteredRecords = dataService.getRecordsByGeo(geo);
+    //       res.json(filteredRecords);
+    //     },
+
+
+/**
+ * Filters records by type of product and geographical area.
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
+filterRecordsByProductAndGeo: (req, res) => {
+  const { typeOfProduct, geo } = req.query;
+
+  // If neither typeOfProduct nor geo is provided, return all records
+  if (!typeOfProduct && !geo) {
+    const allRecords = dataService.getAllRecords();
+    return res.json(allRecords);
+  }
+
+  // If typeOfProduct is provided but not geo, filter by typeOfProduct
+  if (typeOfProduct && !geo) {
+    const filteredRecords = dataService.getRecordsByProduct(typeOfProduct);
+    return res.json(filteredRecords);
+  }
+
+  // If geo is provided but not typeOfProduct, filter by geo
+  if (!typeOfProduct && geo) {
+    const filteredRecords = dataService.getRecordsByGeo(geo);
+    return res.json(filteredRecords);
+  }
+
+  // If both typeOfProduct and geo are provided, filter by both
+  const filteredRecords = dataService.getRecordsByProductAndGeo(typeOfProduct, geo);
+  res.json(filteredRecords);
+},
+
     
     /**
      * Reloads records by loading them again from a data source.
